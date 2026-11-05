@@ -1,10 +1,14 @@
 from odoo import api, models, fields
 from dateutil.relativedelta import relativedelta
-from datetime import date, datetime
 
 class EstatePropertyOffer(models.Model):
   _name = 'estate.property.offer'
   _description = 'Estate Property Offer'
+
+  _check_price = models.Constraint(
+    'CHECK(price > 0)',
+    'The offer price should be strict positive'
+  )
 
   price = fields.Float()
   status = fields.Selection([
