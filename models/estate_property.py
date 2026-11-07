@@ -7,6 +7,7 @@ from dateutil.relativedelta import relativedelta
 class EstateProperty(models.Model):
   _name = 'estate.property'
   _description = 'Estate Property'
+  _order = 'id desc'
 
   _check_expected_price = models.Constraint(
     'CHECK(expected_price > 0)',
