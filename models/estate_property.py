@@ -1,6 +1,7 @@
 from odoo import models, fields, api
-from odoo.exceptions import UserError
+from odoo.exceptions import UserError, ValidationError
 from odoo.tools.translate import _
+from odoo.tools.float_utils import float_compare
 from dateutil.relativedelta import relativedelta
 
 class EstateProperty(models.Model):
@@ -61,6 +62,14 @@ class EstateProperty(models.Model):
 
   total_area = fields.Integer(compute='_compute_total_area')
   best_offer = fields.Float(compute='_compute_best_offer')
+
+  @api.constrains('selling_price', 'expected_price')
+  def _check_price_ratio(self):
+    for record in self:
+      price_ratio = record.selling_price / record.expected_price
+      print("Price ration %f" % price_ratio)
+      if float_compare(price_ratio, 0.9, precision_rounding=0.001) < 0:
+        raise ValidationError(_('The selling price cannot lower than 90% of the expected price'))
 
   @api.depends('living_area', 'garden_area')
   def _compute_total_area(self):
