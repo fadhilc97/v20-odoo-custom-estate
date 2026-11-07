@@ -27,6 +27,17 @@
     </field>
   </record>
 
+  <record id="estate_property_type_list_view" model="ir.ui.view">
+    <field name="name">estate.property.type.list.view</field>
+    <field name="model">estate.property.type</field>
+    <field name="arch" type="xml">
+      <list>
+        <field name="sequence" widget="handle" />
+        <field name="name" />
+      </list>
+    </field>
+  </record>
+
   <record id="estate_property_type_action" model="ir.actions.act_window">
     <field name="name">Estate Property Type</field>
     <field name="res_model">estate.property.type</field>
