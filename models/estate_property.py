@@ -67,8 +67,7 @@ class EstateProperty(models.Model):
   def _check_price_ratio(self):
     for record in self:
       price_ratio = record.selling_price / record.expected_price
-      print("Price ration %f" % price_ratio)
-      if float_compare(price_ratio, 0.9, precision_rounding=0.001) < 0:
+      if record.selling_price > 0 and float_compare(price_ratio, 0.9, precision_rounding=0.001) < 0:
         raise ValidationError(_('The selling price cannot lower than 90% of the expected price'))
 
   @api.depends('living_area', 'garden_area')
